@@ -1,16 +1,16 @@
-package org.academiadecodigo.javabank.domain.account;
+package org.academiadecodigo.javabank.model.account;
 
 /**
  * A checking account with no restrictions
  * @see Account
  * @see AccountType#CHECKING
  */
-public class CheckingAccount extends Account {
+public class CheckingAccount extends AbstractAccount {
 
     /**
      * Creates a new {@code CheckingAccount} instance
      *
-     * @see Account#Account(int)
+     * @see AbstractAccount#AbstractAccount(int)
      */
     public CheckingAccount(int id) {
         super(id);
