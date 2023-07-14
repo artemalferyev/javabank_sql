@@ -153,7 +153,7 @@ public class Bootstrap {
         authService.setDbConnection(dbConnection);
         accountService.setDbConnection(dbConnection);
         customerService.setDbConnection(dbConnection);
-        loadCustomers();
+        //loadCustomers();
 
         return loginController;
     }

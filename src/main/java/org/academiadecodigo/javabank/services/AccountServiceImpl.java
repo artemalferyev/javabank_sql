@@ -4,6 +4,9 @@ import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +29,26 @@ public class AccountServiceImpl implements AccountService {
      * @return the next id
      */
     private Integer getNextId() {
-        return accountMap.isEmpty() ? 1 : Collections.max(accountMap.keySet()) + 1;
+        String query = "SELECT MAX(account_id) FROM account";
+
+        try {
+            Statement statement = dbConnection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            int result = 1;
+
+            if (resultSet.next()) {
+                result = resultSet.getInt(1)+1;
+            }
+            System.out.println("returning result: " + result);
+            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+     //   return accountMap.isEmpty() ? 1 : Collections.max(accountMap.keySet()) + 1;
     }
 
     /**
@@ -34,11 +56,17 @@ public class AccountServiceImpl implements AccountService {
      */
     public void add(Account account) {
 
-        if (account.getId() == null) {
-            account.setId(getNextId());
+        /*String query = "INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES(" + account.getId()" , " + ";*/
+
+        try {
+            Statement statement = dbConnection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        accountMap.put(account.getId(), account);
     }
 
     /**

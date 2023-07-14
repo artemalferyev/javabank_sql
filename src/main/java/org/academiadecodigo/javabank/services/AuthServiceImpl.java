@@ -2,10 +2,7 @@ package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.Customer;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * An {@link AuthService} implementation
@@ -36,11 +33,14 @@ public class AuthServiceImpl implements AuthService {
     public boolean authenticate(Integer id) {
 
         try {
-            Statement statement = dbConnection.createStatement();
 
-            String query = "SELECT * FROM customer WHERE customer_id =" + id;
+            String query = "SELECT * FROM customer WHERE id = ?";
 
-            ResultSet resultSet = statement.executeQuery(query);
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+
+            statement.setInt( 1,id);
+
+            ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
                 accessingCustomer = customerService.get(id);
@@ -54,7 +54,6 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException(e);
         }
 
-        //return accessingCustomer != null;
     }
 
     /**
