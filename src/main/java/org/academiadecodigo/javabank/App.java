@@ -19,7 +19,7 @@ public class App {
         bootstrap.setAuthService(new AuthServiceImpl());
         bootstrap.setAccountService(new AccountServiceImpl());
         bootstrap.setCustomerService(new CustomerServiceImpl());
-        bootstrap.loadCustomers();
+        //bootstrap.loadCustomers();
 
         Controller controller = bootstrap.wireObjects();
 

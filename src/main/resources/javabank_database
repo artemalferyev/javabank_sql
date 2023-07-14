@@ -1,0 +1,36 @@
+drop database if exists java_bank;
+create database java_bank;
+use java_bank;
+
+create table customer(
+    customer_name VARCHAR(255) NOT NULL,
+    customer_id INTEGER NOT NULL UNIQUE,
+    PRIMARY KEY (customer_id)
+);
+
+create table account(
+    account_id INTEGER NOT NULL UNIQUE,
+    customer_id INTEGER NOT NULL,
+    account_balance INTEGER NOT NULL,
+    account_type VARCHAR(255) NOT NULL,
+    PRIMARY KEY (account_id),
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
+);
+
+INSERT INTO customer(customer_name, customer_id) VALUES ('Jorge', 1);
+INSERT INTO customer(customer_name, customer_id) VALUES ('Ze', 2);
+INSERT INTO customer(customer_name, customer_id) VALUES ('Artem', 3);
+
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (1, 1, 0, 'CHECKING');
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (2, 2, 0, 'CHECKING');
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (3, 3, 0, 'CHECKING');
+
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (4, 1, 200, 'CHECKING');
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (5, 2, 200, 'CHECKING');
+INSERT INTO account(account_id, customer_id, account_balance, account_type) VALUES (6, 3, 2000000, 'CHECKING');
+
+
+
+
+
+

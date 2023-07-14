@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank.services;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 
+import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,12 @@ import java.util.Map;
  */
 public class AccountServiceImpl implements AccountService {
 
+    private Connection dbConnection;
     private Map<Integer, Account> accountMap = new HashMap<>();
+
+    public void setDbConnection(Connection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     /**
      * Gets the next account id

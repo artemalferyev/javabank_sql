@@ -6,11 +6,13 @@ import org.academiadecodigo.javabank.controller.transaction.DepositController;
 import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
 import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.mysql.ConnectionManager;
 import org.academiadecodigo.javabank.services.AccountServiceImpl;
 import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.services.CustomerServiceImpl;
 import org.academiadecodigo.javabank.view.*;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,11 @@ public class Bootstrap {
     private AuthServiceImpl authService;
     private CustomerServiceImpl customerService;
     private AccountServiceImpl accountService;
+    private ConnectionManager connectionManager;
+
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     /**
      * Sets the authentication service
@@ -75,6 +82,9 @@ public class Bootstrap {
 
         // attach all input to standard i/o
         Prompt prompt = new Prompt(System.in, System.out);
+
+        connectionManager = new ConnectionManager();
+        Connection dbConnection = connectionManager.getConnection();
 
         // wire services
         authService.setCustomerService(customerService);
@@ -139,6 +149,11 @@ public class Bootstrap {
         controllerMap.put(UserOptions.WITHDRAW.getOption(), withdrawalController);
 
         mainController.setControllerMap(controllerMap);
+
+        authService.setDbConnection(dbConnection);
+        accountService.setDbConnection(dbConnection);
+        customerService.setDbConnection(dbConnection);
+        loadCustomers();
 
         return loginController;
     }

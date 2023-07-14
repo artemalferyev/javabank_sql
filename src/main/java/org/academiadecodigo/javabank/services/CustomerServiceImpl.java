@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank.services;
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 
+import java.sql.Connection;
 import java.util.*;
 
 /**
@@ -11,12 +12,17 @@ import java.util.*;
 public class CustomerServiceImpl implements CustomerService {
 
     private Map<Integer, Customer> customerMap = new HashMap<>();
+    private Connection dbConnection;
 
+    public void setDbConnection(Connection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
     /**
      * Gets the next account id
      *
      * @return the next id
      */
+
     private Integer getNextId() {
         return customerMap.isEmpty() ? 1 : Collections.max(customerMap.keySet()) + 1;
     }
